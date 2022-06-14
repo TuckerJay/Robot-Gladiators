@@ -102,7 +102,7 @@ var startGame = function() {
     //reset player stats
     playerHealth = 100;
 
-    playerAttack = 10;
+    playerAttack = 30;
 
     playerMoney = 10;
 
@@ -117,6 +117,19 @@ var startGame = function() {
             enemyHealth = 50;
         
             fight(pickedEnemyName);
+            
+            // Shop
+            if ( playerHealth > 0 && i < enemyNames.length - 1) {
+
+                var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+
+                if (storeConfirm) {
+
+                    shop();
+
+                }
+
+            }
         
         }
     
@@ -165,6 +178,63 @@ var endGame = function() {
 
     }
 }
+
+
+var shop = function() {
+
+    // ask player shop choice
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    );
+
+    // Shop switch
+    switch (shopOptionPrompt) {
+
+        case "REFILL":
+        case "refill":
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!")
+            }
+
+            break;
+
+        case "UPGRADE":
+        case "upgrade":
+            if(playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!")
+            }
+
+            break;
+
+        case "LEAVE":
+        case "leave":
+            window.alert("Leaving the store.");
+
+            break;
+
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+
+            //call shop() to force player choice
+            shop();
+
+            break;
+        
+    }
+
+};
 
 
 // start the game when the page loads
